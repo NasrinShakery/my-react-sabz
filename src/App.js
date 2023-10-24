@@ -1,11 +1,12 @@
-import './App.css';
+import React, { Component } from 'react'
+import Ticket from './components/Ticket/Ticket'
 
-function App() {
-  return (
-    <>
-      App
-    </>
-  );
+export default class App extends Component {
+    render() {
+        return (
+            <div>
+                <Ticket />
+            </div>
+        )
+    }
 }
-
-export default App;
