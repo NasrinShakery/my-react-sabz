@@ -50,6 +50,30 @@ export default class Quiz extends React.Component {
             score: 0
         }
     }
+    answerHandling = (isCorrect)=>{
+        isCorrect===true && this.setState(prevState => {
+            return {
+                score: prevState.score+1
+            }
+        });
+
+        // if(this.state.currentQuestion<this.state.questions.length-1){
+            // console.log( "current"+this.state.currentQuestion);
+            // console.log("length"+(this.state.questions.length-1));
+            // this.setState({
+            //     currentQuestion: this.state.currentQuestion+1
+            // })
+        // }
+        if(this.state.currentQuestion===this.state.questions.length-1){
+            this.setState({
+                showScore:true
+            })
+        }else{
+            this.setState({
+                currentQuestion: this.state.currentQuestion+1
+            })
+        }
+    }
 
     render() {
         return (
@@ -58,18 +82,28 @@ export default class Quiz extends React.Component {
                     {/* <div className='score-section'>
                         You scored 0 out of 4
                     </div> */}
-                        <div className='question-section'>
-                            <div className='question-count'>
-                                <span>Question 1</span>/ 4
-                            </div>
-                            <div className='question-text'>Where is Iran capital?</div>
+                {this.state.showScore ? 
+                        (<div className='score-section'> { console.log("score in element: " + this.state.score)}
+                        You scored {this.state.score} out of {this.state.questions.length}
+                    </div>)
+                    :
+                      (
+                        <>
+                            <div className='question-section'>
+                                <div className='question-count'>
+                                    <span>Question {this.state.currentQuestion+1}</span>/ {this.state.questions.length}
+                                </div>
+                                <div className='question-text'>{this.state.questions[this.state.currentQuestion].questionText}</div>
                         </div>
                         <div className='answer-section'>
-                                <button>Tehran</button>
-                                <button>Tabriz</button>
-                                <button>Gorgan</button>
-                                <button>Shiraz</button>
+                            {this.state.questions[this.state.currentQuestion].answerOptions.map((answer,index)=> (
+                                <button key={index} onClick={this.answerHandling.bind(this,answer.isCorrect)}>{answer.answerText}</button>
+                            ))}
                         </div>
+                        </>
+                      )
+                            }  
+                        
             </div>
         )
     }
