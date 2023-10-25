@@ -2,18 +2,22 @@ import React, { Component } from 'react'
 
 export default class CartProduct extends Component {
 
+    rempveBtnHandler(id){
+        this.props.removeProductFromShoppingCart(id);
+    }
+
     render() {
-
+        let {id, title, price, img} = this.props
         return (
-            <div class="cart-row">
-                <div class="cart-item cart-column">
-                    <img class="cart-item-image" src="Images/Shirt.png" width="100" height="100" />
-                    <span class="cart-item-title">Shirt</span>
+            <div className="cart-row">
+                <div className="cart-item cart-column">
+                    <img className="cart-item-image" src={img} width="100" height="100" />
+                    <span className="cart-item-title">{title}</span>
                 </div>
-                <span class="cart-price cart-column">$198</span>
-                <div class="cart-quantity cart-column">
+                <span className="cart-price cart-column">${price}</span>
+                <div className="cart-quantity cart-column">
 
-                    <button class="btn btn-danger" type="button">REMOVE</button>
+                    <button className="btn btn-danger" type="button" onClick={this.rempveBtnHandler.bind(this, id)}>REMOVE</button>
                 </div>
             </div>
         )

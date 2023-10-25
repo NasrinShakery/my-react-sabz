@@ -22,56 +22,91 @@ export default class Shop extends Component {
             socials: [
                 { id: 1, href: 'https://www.youtube.com', img: 'Images/YouTube Logo.png' },
                 { id: 2, href: 'https://www.spotify.com', img: 'Images/Spotify Logo.png' },
-                { id: 3, href: 'https://www.facebook.com', img: 'Images/YouTube Logo.png' },
+                { id: 3, href: 'https://www.facebook.com', img: 'Images/Facebook Logo.png' },
             ],
         }
 
+        this.addToShopCart = this.addToShopCart.bind(this)
+        this.removeProductFromShoppingCart = this.removeProductFromShoppingCart.bind(this)
+    }
 
+    addToShopCart (id) {
+        console.log(id);
+        let userProduct = this.state.products.find(product => {return product.id === id})
+        console.log(userProduct);
+        this.setState(prevState => {
+            return {
+                shoppingCart: [...prevState.shoppingCart, userProduct]
+            }
+        })
+    }
+    removeProductFromShoppingCart(id){
+        console.log(id);
+        let newProductCart  = this.state.shoppingCart.filter(product => {
+            return product.id !== id
+        })
+        this.setState({
+            shoppingCart: newProductCart
+        })
+    }
+    emptyCartBtn(){
+        this.setState({
+            shoppingCart: []
+        })
     }
 
 
     render() {
         return (
             <>
-                <header class="main-header">
-                    <nav class="main-nav nav">
+                <header className="main-header">
+                    <nav className="main-nav nav">
                         <ul>
                             <li><a href="#">HOME</a></li>
                             <li><a href="#">STORE</a></li>
                             <li><a href="#">ABOUT</a></li>
                         </ul>
                     </nav>
-                    <h1 class="band-name band-name-large">SabzLearn Shop</h1>
+                    <h1 className="band-name band-name-large">SabzLearn Shop</h1>
                 </header>
-                <section class="container content-section">
-                    <div class="shop-items">
+                <section className="container content-section">
+                    <div className="shop-items">
+                        {this.state.products.map(product =>(
+                            <Product key={product.id} {...product} addToShopCart = {this.addToShopCart}/>
 
-                        <Product />
+                        ))}
+
                     </div>
                 </section>
-                <section class="container content-section">
-                    <h2 class="section-header">CART</h2>
-                    <div class="cart-row">
-                        <span class="cart-item cart-header cart-column">ITEM</span>
-                        <span class="cart-price cart-header cart-column">PRICE</span>
-                        <span class="cart-quantity cart-header cart-column">Doing</span>
+                <section className="container content-section">
+                    <h2 className="section-header">CART</h2>
+                    <div className="cart-row">
+                        <span className="cart-item cart-header cart-column">ITEM</span>
+                        <span className="cart-price cart-header cart-column">PRICE</span>
+                        <span className="cart-quantity cart-header cart-column">Doing</span>
                     </div>
-                    <div class="cart-items">
-
-                        <CartProduct />
+                    <div className="cart-items">
+                            {
+                                this.state.shoppingCart.map(cart => (
+                                    <CartProduct {...cart} removeProductFromShoppingCart={this.removeProductFromShoppingCart}/>
+                                ))
+                            }
 
 
                     </div>
-                    <button class="btn btn-primary btn-purchase" type="button">
+                    <button className="btn btn-primary btn-purchase" type="button" onClick={this.emptyCartBtn.bind(this)}>
                         Empty Cart
                     </button>
                 </section>
-                <footer class="main-footer">
-                    <div class="container main-footer-container">
-                        <h3 class="band-name">The Generics</h3>
-                        <ul class="nav footer-nav">
-
-                            <Social />
+                <footer className="main-footer">
+                    <div className="container main-footer-container">
+                        <h3 className="band-name">The Generics</h3>
+                        <ul className="nav footer-nav">
+                            {
+                                this.state.socials.map(socials => (
+                                    <Social {...socials} />
+                                ))
+                            }
                         </ul>
                     </div>
                 </footer>
