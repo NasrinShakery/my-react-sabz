@@ -1,11 +1,14 @@
-import './App.css';
+import React, { Component } from 'react'
+import NoteApp from './components/NoteApp/NoteApp'
+import './App.css'
 
-function App() {
-  return (
-    <>
-      App
-    </>
-  );
+export default class App extends Component {
+
+    render() {
+        return (
+            <div>
+                <NoteApp />
+            </div>
+        )
+    }
 }
-
-export default App;
