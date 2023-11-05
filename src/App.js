@@ -1,9 +1,10 @@
 import './App.css';
+import RBts from './copmonents/RBts';
 
 function App() {
   return (
     <>
-      App
+      <RBts/>
     </>
   );
 }
