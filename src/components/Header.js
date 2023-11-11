@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navbar, Container, Nav } from 'react-bootstrap'
 import { Link, NavLink } from 'react-router-dom'
+import "./style.css"
 
 export default function Header() {
     return (
