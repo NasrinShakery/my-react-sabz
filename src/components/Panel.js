@@ -1,22 +1,22 @@
 import React from 'react'
-import { isLogin } from './../utils'
-import { Navigate } from 'react-router-dom'
+// import { isLogin } from './../utils'
+// import { Navigate } from 'react-router-dom'
 
 export default function Panel() {
 
-    let isUserLogin = isLogin('amir')
+    // let isUserLogin = isLogin('amir')
 
-    console.log(isUserLogin);
+    // console.log(isUserLogin);
 
     return (
         <div>
-            {
-                isUserLogin ? (
+            {/* { */}
+                {/* // isUserLogin ? ( */}
                     <h1 style={{ textAlign: 'center' }}>WelCome to Panel </h1>
-                ) : (
-                    <Navigate to='/login' />
-                )
-            }
+                {/* ) : ( */}
+                    {/* <Navigate to='/login' /> */}
+                {/* )
+            } */}
         </div>
     )
 }

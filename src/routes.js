@@ -4,8 +4,10 @@ import About from './components/About/About'
 import Login from './components/Login'
 import Panel from './components/Panel'
 import Dashboard from './components/Dashboard'
+import PrivateRoute from './components/PrivateRoute'
 
 let routes = [
+    // { path: "/", element: </>},
     { path: '/courses', element: < Courses /> },
     { path: '/course/:courseID', element: <MainCourse /> },
 
@@ -16,8 +18,8 @@ let routes = [
         ]
     },
     { path: '/login', element: <Login /> },
-    { path: '/panel', element: <Panel /> },
-    { path: '/dashboard', element: <Dashboard /> },
+    { path: '/panel', element:<PrivateRoute><Panel /></PrivateRoute> },
+    { path: '/dashboard', element: <PrivateRoute><Dashboard /> </PrivateRoute>},
 ]
 
 export default routes

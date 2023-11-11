@@ -1,22 +1,9 @@
-import React from 'react'
-import { isLogin } from './../utils'
-import { Navigate } from 'react-router-dom'
+import React from "react";
 
 export default function Dashboard() {
-
-    let isUserLogin = isLogin('amir')
-
-    console.log(isUserLogin);
-
-    return (
-        <div>
-            {
-                isUserLogin ? (
-                    <h1 style={{ textAlign: 'center' }}>WelCome to Dashboard :)</h1>
-                ) : (
-                    <Navigate to='/login' />
-                )
-            }
-        </div>
-    )
+   return (
+      <div>
+         <h1 style={{ textAlign: "center" }}>WelCome to Dashboard :)</h1>
+      </div>
+   );
 }
