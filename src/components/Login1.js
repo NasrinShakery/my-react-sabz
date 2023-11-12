@@ -1,23 +1,21 @@
 import React, { useState } from "react";
-import "./styles.css";
-import { TextField, Button } from "@mui/material";
-import Box from '@mui/material/Box';
 
-const Login = () => {
+
+
+const Login1 = () => {
    const [fname, setFname] = useState("");
    const [lname, setLname] = useState("");
    const [email, setEmail] = useState("");
 
-   const submitHandler = (event) => {
-      event.preventDefault();
-      console.log("***********");
+   const submitHandler = (e) => {
+      e.preventDefault();
+      console.log("333333333333");
       let userInfo = {
          fname:fname,
          lname:lname,
          email:email
       };
       console.log(userInfo.fname);
-      
       fetch("https://project11-60413-default-rtdb.firebaseio.com/users.json", {
          method: "POST",
          // headers: { 'Content-Type': 'application/json' },
@@ -25,38 +23,42 @@ const Login = () => {
       }).then(response => {console.log(response)})
       // .catch(err => {console.log(err)})
    };
+  
+  
 
    return (
-      <div className="App">
-         <Box className="form"  component="form" autoComplete="off" onSubmit={submitHandler}>
-            <TextField
-               label="first name"
-               variant="outlined"
+      <div >
+         <form   onSubmit={submitHandler}>
+            <input
+               placeholder="first name"
                id="fname"
                value={fname}
                onChange={(e) => setFname(e.target.value)}
+               type="text"
             />
-            <TextField
-               label="last name"
+            <input
+               placeholder="last name"
                id="lname"
-               variant="outlined"
+               
                value={lname}
                onChange={(e) => setLname(e.target.value)}
+               type="text"
             />
-            <TextField
-               label="email"
+            <input
+               placeholder="email"
                id="email"
-               variant="outlined"
+               
                value={email}
                onChange={(e) => setEmail(e.target.value)}
+               type="email"
             />
 
-            <Button className="form__custom-button" variant="outlined">
+            <button >
                Log in
-            </Button>
-         </Box>
+            </button>
+         </form>
       </div>
    );
 };
 
-export default Login;
+export default Login1;
