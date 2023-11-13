@@ -10,7 +10,7 @@ const Users = () => {
    const [users, setUsers] = useState([]);
    const [showDeleteModal, setShowDeleteModal] = useState(false);
    const [showEditModal, setShowEditModal] = useState(false);
-
+   const [getData, setGetData]= useState(false);
    const [userID, setUserID] = useState("");
 
    useEffect(() => {
@@ -20,17 +20,18 @@ const Users = () => {
             console.log(Object.entries(data));
             setUsers(Object.entries(data));
          });
-   }, []);
+   }, [getData]);
 
-   const removeHandler = () => {
+   const removeHandler = async () => {
       // console.log("user removed");
       // console.log(userID);
 
-      fetch(`https://project11-60413-default-rtdb.firebaseio.com/users/${userID}.json`,{
+      await fetch(`https://project11-60413-default-rtdb.firebaseio.com/users/${userID}.json`,{
         method: "DELETE"
       }).then(res => console.log(res))
 
       setShowDeleteModal(false);
+      setGetData(prev => !prev);
    };
 
    return (
