@@ -5,13 +5,18 @@ import Table from "react-bootstrap/Table";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { Form } from "react-bootstrap";
 
 const Users = () => {
    const [users, setUsers] = useState([]);
    const [showDeleteModal, setShowDeleteModal] = useState(false);
    const [showEditModal, setShowEditModal] = useState(false);
-   const [getData, setGetData]= useState(false);
+   const [getData, setGetData] = useState(false);
    const [userID, setUserID] = useState("");
+   const [fname, setFname] = useState("");
+   const [lname, setLname] = useState("");
+   const [email, setEmail] = useState("");
+
 
    useEffect(() => {
       fetch("https://project11-60413-default-rtdb.firebaseio.com/users.json")
@@ -22,16 +27,47 @@ const Users = () => {
          });
    }, [getData]);
 
+   useEffect(() => {
+      let mainUser = users.find(user => user[0] == userID)
+      console.log(mainUser);
+      if(mainUser) {
+         setFname(mainUser[1].fname);
+         setLname(mainUser[1].lname);
+         setEmail(mainUser[1].email);
+      }
+   },[userID])
+
    const removeHandler = async () => {
       // console.log("user removed");
       // console.log(userID);
 
-      await fetch(`https://project11-60413-default-rtdb.firebaseio.com/users/${userID}.json`,{
-        method: "DELETE"
-      }).then(res => console.log(res))
+      await fetch(
+         `https://project11-60413-default-rtdb.firebaseio.com/users/${userID}.json`,
+         {
+            method: "DELETE",
+         }
+      ).then((res) => console.log(res));
 
       setShowDeleteModal(false);
-      setGetData(prev => !prev);
+      setGetData((prev) => !prev);
+   };
+
+   const editHandler = async () => {
+
+      let editedUserInfo = {
+         fname:fname,
+         lname:lname,
+         email:email
+      };
+
+      await fetch(`https://project11-60413-default-rtdb.firebaseio.com/users/${userID}.json`, {
+         method: "PUT",
+         // headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify(editedUserInfo)
+      }).then(response => {console.log(response)})
+      setShowEditModal(false);
+      setGetData((prev) => !prev);
+
    };
 
    return (
@@ -63,7 +99,10 @@ const Users = () => {
                         </Button>
                         <Button
                            variant="primary"
-                           onClick={() => setShowEditModal(true)}
+                           onClick={() => {
+                              setShowEditModal(true);
+                              setUserID(user[0]);
+                           }}
                         >
                            Edit
                         </Button>
@@ -72,7 +111,7 @@ const Users = () => {
                ))}
             </tbody>
          </Table>
-
+         {/* Delete modal */}
          <Modal show={showDeleteModal} onHide={() => setShowDeleteModal(false)}>
             <Modal.Header closeButton>
                <Modal.Title>Confirm Delete</Modal.Title>
@@ -87,6 +126,42 @@ const Users = () => {
                </Button>
                <Button variant="danger" onClick={removeHandler}>
                   Yes, Delete it.
+               </Button>
+            </Modal.Footer>
+         </Modal>
+         {/* Edit modal */}
+         <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+            <Modal.Header closeButton>
+               <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+               <Form>
+                  <Form.Group className="mb-3" controlId="formBasicFname">
+                     <Form.Label>First Name :</Form.Label>
+                     <Form.Control type="text" placeholder="First Name" value={fname}  onChange={event => setFname(event.target.value)} />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicLname">
+                     <Form.Label>Last Name :</Form.Label>
+                     <Form.Control type="text" placeholder="Last Name" value={lname}  onChange={event => setLname(event.target.value)} />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="formBasicEmail">
+                     <Form.Label>Email :</Form.Label>
+                     <Form.Control type="email" placeholder="Enter email" value={email}  onChange={event => setEmail(event.target.value)} />
+                     
+                  </Form.Group>
+               </Form>
+            </Modal.Body>
+            <Modal.Footer>
+               <Button
+                  variant="secondary"
+                  onClick={() => setShowEditModal(false)}
+               >
+                  Close
+               </Button>
+               <Button variant="danger" onClick={editHandler}>
+                  Edite
                </Button>
             </Modal.Footer>
          </Modal>
