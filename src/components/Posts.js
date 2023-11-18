@@ -1,40 +1,42 @@
 import React, { useState, useEffect } from "react";
+import useFetch from "../hooks/useFetch";
 
 const Posts = () => {
-   const [posts, setPosts] = useState([]);
-   const [err, setErr] = useState(null);
-   const [isPending, setIsPending] = useState(true);
+   // const [posts, setPosts] = useState([]);
+   // const [err, setErr] = useState(null);
+   // const [isPending, setIsPending] = useState(true);
 
-   const fetchPosts = async (url) => {
-      await fetch(url)
-         .then((res) => res.json())
-         .then((data) => {
-            console.log(data);
-            setPosts(data);
-            console.log(posts);
-            isPending(false);
-            err(null);
-         })
-         .catch((err) => setErr(err.message));
-   };
+   // const fetchPosts = async (url) => {
+   //    await fetch(url)
+   //       .then((res) => res.json())
+   //       .then((data) => {
+   //          console.log(data);
+   //          setPosts(data);
+   //          console.log(posts);
+   //          isPending(false);
+   //          err(null);
+   //       })
+   //       .catch((err) => setErr(err.message));
+   // };
 
-   useEffect(() => {
-      fetchPosts("https://jsonplaceholder.typicode.com/posts");
-      console.log(posts);
-   }, []);
+   // useEffect(() => {
+   //    fetchPosts("https://jsonplaceholder.typicode.com/posts");
+   //    console.log(posts);
+   // }, []);
+
+   const {posts, isPending, err} = useFetch('https://jsonplaceholder.typicode.com/posts')
 
    return (
       <div>
-         {console.log(posts)}
+         {/* {console.log(posts)} */}
          {err && <div>Error {err}</div>}
          {isPending && <div>isloading...</div>}
 
          {posts &&
             posts.map((post) => (
                <div key={post.id}>
-                  {console.log(post.id)}
-                  <h2>{post.id}</h2>
-                  <span>{post.title}</span>
+                  {/* {console.log(post.id)} */}
+                  <h2>{post.id} - {post.title}</h2>
                   <hr />
                </div>
             ))}
